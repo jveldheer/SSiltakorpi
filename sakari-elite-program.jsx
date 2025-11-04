@@ -54,8 +54,8 @@ const WEEK_1_DATA = {
     ],
     main: [
       { name: "1a) Single Leg Box Jump", sets: "2x5/5", note: "Stick landing", link: "https://youtube.com/shorts/uKC7iY9FlKc" },
-      { name: "1b) Banded Lateral Neck Kick to Power", sets: "2x6 (R/L)", note: "Footwork precision", link: "https://youtube.com/shorts/xgXJrgJzano" },
-      { name: "1d) Banded Lateral Neck Power to Kick", sets: "2x6 (R/L)", note: "Reverse direction", link: "https://youtube.com/shorts/xgXJrgJzano" }
+      { name: "1b) Banded Lateral Neck Kick to Power", sets: "2x6/6 (R/L)", note: "Footwork precision", link: "https://youtube.com/shorts/xgXJrgJzano" },
+      { name: "1c) Banded Lateral Neck Power to Kick", sets: "2x6/6 (R/L)", note: "Reverse direction", link: "https://youtube.com/shorts/xgXJrgJzano" }
     ],
     strength: [
       { name: "2a) Trap Bar RFESS", sets: "2x5/5", tempo: "3s eccentric", note: "Balance + load", link: "https://youtube.com/shorts/tNK_boQhqJQ" },
@@ -397,28 +397,28 @@ export default function SakariEliteProgram() {
     const isExpanded = expandedExercise === `${section}-${index}`;
 
     return (
-      <div key={index} className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-gray-700 rounded-xl p-5 hover:border-yellow-500 transition-all">
-        <div className="flex justify-between items-start gap-4 mb-3">
-          <div className="flex-1">
+      <div key={index} className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-gray-700 rounded-xl p-3 sm:p-4 md:p-5 hover:border-yellow-500 transition-all">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 mb-3">
+          <div className="flex-1 w-full">
             <a
               href={exercise.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bebas text-2xl text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2"
+              className="font-bebas text-lg sm:text-xl md:text-2xl text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2 touch-manipulation"
             >
-              <span>🎥</span>
-              <span>{exercise.name}</span>
+              <span className="text-xl sm:text-2xl">🎥</span>
+              <span className="break-words">{exercise.name}</span>
             </a>
             {exercise.note && (
-              <p className="text-gray-400 text-sm mt-1">💡 {exercise.note}</p>
+              <p className="text-gray-400 text-xs sm:text-sm mt-1 break-words">💡 {exercise.note}</p>
             )}
           </div>
-          <div className="flex flex-col items-end gap-2">
-            <span className="font-bebas text-lg bg-yellow-500/20 border border-yellow-500 px-3 py-1 rounded whitespace-nowrap">
+          <div className="flex sm:flex-col items-center sm:items-end gap-2 self-start">
+            <span className="font-bebas text-base sm:text-lg bg-yellow-500/20 border border-yellow-500 px-2 sm:px-3 py-1 rounded whitespace-nowrap">
               {exercise.sets}
             </span>
             {exercise.tempo && (
-              <span className="text-xs text-blue-400 bg-blue-900/20 px-2 py-1 rounded">
+              <span className="text-xs text-blue-400 bg-blue-900/20 px-2 py-1 rounded whitespace-nowrap">
                 {exercise.tempo}
               </span>
             )}
@@ -427,19 +427,19 @@ export default function SakariEliteProgram() {
 
         <button
           onClick={() => setExpandedExercise(isExpanded ? null : `${section}-${index}`)}
-          className="text-sm text-gray-400 hover:text-yellow-500 transition-colors mb-3"
+          className="text-xs sm:text-sm text-gray-400 hover:text-yellow-500 active:text-yellow-400 transition-colors mb-3 py-2 px-3 bg-gray-900/50 rounded touch-manipulation w-full sm:w-auto"
         >
           {isExpanded ? '▼ Hide tracking' : '▶ Track sets'}
         </button>
 
         {isExpanded && (
-          <div className="space-y-3 pt-3 border-t border-gray-700">
+          <div className="space-y-2 sm:space-y-3 pt-3 border-t border-gray-700">
             {[...Array(numSets)].map((_, setIndex) => {
               const savedData = workoutData[key]?.[index]?.[setIndex] || {};
               return (
-                <div key={setIndex} className="flex items-center gap-3 p-3 bg-black/30 rounded-lg border border-gray-700">
-                  <span className="font-bebas text-yellow-500 min-w-[60px]">Set {setIndex + 1}</span>
-                  <div className="flex-1 grid grid-cols-2 gap-3">
+                <div key={setIndex} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 p-3 bg-black/30 rounded-lg border border-gray-700">
+                  <span className="font-bebas text-yellow-500 text-base sm:text-lg min-w-[60px]">Set {setIndex + 1}</span>
+                  <div className="flex-1 w-full grid grid-cols-2 gap-2 sm:gap-3">
                     <div>
                       <label className="block text-xs text-gray-400 uppercase mb-1">Weight</label>
                       <input
@@ -447,7 +447,8 @@ export default function SakariEliteProgram() {
                         placeholder="100kg"
                         value={savedData.weight || ''}
                         onChange={(e) => handleSetData(activeWeek, activeWorkout, index, setIndex, 'weight', e.target.value)}
-                        className="w-full bg-gray-900 border border-gray-600 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-yellow-500"
+                        className="w-full bg-gray-900 border border-gray-600 rounded px-3 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 touch-manipulation"
+                        inputMode="decimal"
                       />
                     </div>
                     <div>
@@ -459,7 +460,8 @@ export default function SakariEliteProgram() {
                         max="10"
                         value={savedData.rpe || ''}
                         onChange={(e) => handleSetData(activeWeek, activeWorkout, index, setIndex, 'rpe', e.target.value)}
-                        className="w-full bg-gray-900 border border-gray-600 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-yellow-500"
+                        className="w-full bg-gray-900 border border-gray-600 rounded px-3 py-3 text-white text-sm sm:text-base focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 touch-manipulation"
+                        inputMode="numeric"
                       />
                     </div>
                   </div>
@@ -476,39 +478,86 @@ export default function SakariEliteProgram() {
     <div className="min-h-screen bg-black text-white">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
+
+        /* Base font family */
+        body {
+          font-family: 'Inter', sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
         .font-bebas { font-family: 'Bebas Neue', sans-serif; }
+
+        /* Logo animation */
         @keyframes logoGlow {
           0% { filter: drop-shadow(0 0 20px #F5C842) brightness(1.1); }
           100% { filter: drop-shadow(0 0 40px #FFD700) brightness(1.25); }
         }
         .logo-glow { animation: logoGlow 3s ease-in-out infinite alternate; }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+          .logo-glow {
+            animation: logoGlow 2s ease-in-out infinite alternate;
+          }
+        }
+
+        /* Touch-friendly tap targets (minimum 44x44px) */
+        button, a, input, select {
+          min-height: 44px;
+          -webkit-tap-highlight-color: rgba(245, 200, 66, 0.2);
+        }
+
+        /* Smooth scrolling for sticky elements */
+        html {
+          scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for navigation */
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Touch manipulation optimization */
+        .touch-manipulation {
+          touch-action: manipulation;
+          -webkit-touch-callout: none;
+        }
       `}</style>
 
-      {/* Header */}
-      <header className="bg-gradient-to-br from-gray-800 to-gray-900 p-5 border-b-4 border-yellow-500 shadow-2xl">
-        <div className="max-w-7xl mx-auto flex items-center gap-5 flex-wrap">
-          <img src="https://jaredveldh.github.io/VLVL16x9.png" alt="VLV" className="w-44 h-auto rounded-lg logo-glow" />
-          <div className="border-l-4 border-yellow-500 pl-5 flex-1">
-            <h1 className="font-bebas text-5xl text-yellow-500 tracking-wider" style={{textShadow: '0 0 25px rgba(245,200,66,0.5)'}}>
+      {/* Header - Mobile Responsive */}
+      <header className="bg-gradient-to-br from-gray-800 to-gray-900 p-3 sm:p-5 border-b-4 border-yellow-500 shadow-2xl">
+        <div className="max-w-7xl mx-auto flex items-center gap-3 sm:gap-5 flex-wrap justify-center sm:justify-start">
+          <img
+            src="https://jaredveldh.github.io/VLVL16x9.png"
+            alt="VLV"
+            className="w-32 sm:w-40 md:w-44 h-auto rounded-lg logo-glow"
+          />
+          <div className="border-l-4 border-yellow-500 pl-3 sm:pl-5 flex-1 min-w-[200px]">
+            <h1 className="font-bebas text-3xl sm:text-4xl md:text-5xl text-yellow-500 tracking-wider" style={{textShadow: '0 0 25px rgba(245,200,66,0.5)'}}>
               Sakari Siltakorpi
             </h1>
-            <p className="text-gray-300 text-xl font-bold uppercase tracking-wide mt-1">Elite Offseason Program</p>
-            <p className="text-gray-400 text-sm uppercase tracking-wide">VLV | 6-Week Strength & Power Block</p>
+            <p className="text-gray-300 text-base sm:text-lg md:text-xl font-bold uppercase tracking-wide mt-1">Elite Offseason Program</p>
+            <p className="text-gray-400 text-xs sm:text-sm uppercase tracking-wide">VLV | 6-Week Strength & Power Block</p>
           </div>
         </div>
       </header>
 
-      {/* Week Navigation */}
-      <nav className="bg-gray-900 border-b-2 border-gray-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex gap-2 p-3 overflow-x-auto">
+      {/* Week Navigation - Mobile Optimized */}
+      <nav className="bg-gray-900 border-b-2 border-gray-800 sticky top-0 z-50 shadow-lg">
+        <div className="max-w-7xl mx-auto flex gap-2 p-2 sm:p-3 overflow-x-auto scrollbar-hide">
           {[1, 2, 3, 4, 5, 6].map(week => (
             <button
               key={week}
               onClick={() => setActiveWeek(week)}
-              className={`font-bebas px-6 py-3 rounded-lg text-lg tracking-wide whitespace-nowrap transition-all ${
+              className={`font-bebas px-4 sm:px-6 py-3 min-w-[80px] sm:min-w-[100px] rounded-lg text-base sm:text-lg tracking-wide whitespace-nowrap transition-all touch-manipulation ${
                 activeWeek === week
-                  ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/50 font-bold'
-                  : 'bg-gray-800 text-gray-400 border-2 border-gray-700 hover:border-yellow-500 hover:text-yellow-500'
+                  ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/50 font-bold scale-105'
+                  : 'bg-gray-800 text-gray-400 border-2 border-gray-700 hover:border-yellow-500 hover:text-yellow-500 active:scale-95'
               }`}
             >
               Week {week}
@@ -517,9 +566,9 @@ export default function SakariEliteProgram() {
         </div>
       </nav>
 
-      {/* Workout Sub-tabs */}
-      <div className="bg-gray-900 border-b border-gray-800 sticky top-[60px] z-40">
-        <div className="max-w-7xl mx-auto flex gap-2 p-3 overflow-x-auto">
+      {/* Workout Sub-tabs - Mobile Optimized */}
+      <div className="bg-gray-900 border-b border-gray-800 sticky top-[56px] sm:top-[64px] z-40 shadow-md">
+        <div className="max-w-7xl mx-auto flex gap-2 p-2 sm:p-3 overflow-x-auto scrollbar-hide">
           {[
             { key: 'lowerA', label: 'Lower A', icon: '🦵' },
             { key: 'upperA', label: 'Upper A', icon: '💪' },
@@ -529,21 +578,21 @@ export default function SakariEliteProgram() {
             <button
               key={workout.key}
               onClick={() => setActiveWorkout(workout.key)}
-              className={`font-bebas px-5 py-2 rounded-lg text-base tracking-wide whitespace-nowrap transition-all ${
+              className={`font-bebas px-4 sm:px-5 py-3 min-w-[100px] sm:min-w-[120px] rounded-lg text-sm sm:text-base tracking-wide whitespace-nowrap transition-all touch-manipulation ${
                 activeWorkout === workout.key
-                  ? 'bg-purple-600 text-white border-2 border-purple-400'
-                  : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-purple-500 hover:text-purple-400'
+                  ? 'bg-purple-600 text-white border-2 border-purple-400 shadow-md scale-105'
+                  : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-purple-500 hover:text-purple-400 active:scale-95'
               }`}
             >
-              {workout.icon} {workout.label}
+              <span className="text-lg">{workout.icon}</span> {workout.label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Content Section Tabs */}
-      <div className="bg-gray-800 border-b border-gray-700 sticky top-[120px] z-30">
-        <div className="max-w-7xl mx-auto flex gap-2 p-2 overflow-x-auto text-sm">
+      {/* Content Section Tabs - Mobile Optimized */}
+      <div className="bg-gray-800 border-b border-gray-700 sticky top-[112px] sm:top-[128px] z-30 shadow">
+        <div className="max-w-7xl mx-auto flex gap-1 sm:gap-2 p-2 overflow-x-auto scrollbar-hide">
           {[
             { key: 'workout', label: '💪 Workout', color: 'yellow' },
             { key: 'mobility', label: '🧘 Mobility', color: 'green' },
@@ -554,10 +603,10 @@ export default function SakariEliteProgram() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-4 py-2 rounded transition-all whitespace-nowrap ${
+              className={`px-3 sm:px-4 py-2 sm:py-3 min-w-[90px] rounded transition-all whitespace-nowrap text-xs sm:text-sm touch-manipulation ${
                 activeTab === tab.key
-                  ? `bg-${tab.color}-600 text-white font-bold`
-                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                  ? `bg-${tab.color}-600 text-white font-bold shadow-md scale-105`
+                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600 active:scale-95'
               }`}
             >
               {tab.label}
@@ -566,73 +615,73 @@ export default function SakariEliteProgram() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto p-6">
+      {/* Main Content - Mobile Optimized */}
+      <div className="max-w-7xl mx-auto p-3 sm:p-4 md:p-6">
         {activeTab === 'workout' && currentWorkout && (
-          <div className="space-y-6">
-            {/* Workout Header */}
-            <div className="bg-gradient-to-br from-yellow-600 to-yellow-700 rounded-xl p-6 shadow-2xl">
-              <h2 className="font-bebas text-4xl text-black mb-2">{currentWorkout.name}</h2>
-              <p className="text-black text-lg">Week {activeWeek} | Click exercise names for video demos | Track all working sets</p>
+          <div className="space-y-4 sm:space-y-6">
+            {/* Workout Header - Mobile Optimized */}
+            <div className="bg-gradient-to-br from-yellow-600 to-yellow-700 rounded-xl p-4 sm:p-6 shadow-2xl">
+              <h2 className="font-bebas text-2xl sm:text-3xl md:text-4xl text-black mb-2">{currentWorkout.name}</h2>
+              <p className="text-black text-sm sm:text-base md:text-lg">Week {activeWeek} | Click exercise names for video demos | Track all working sets</p>
             </div>
 
-            {/* Warmup */}
+            {/* Warmup - Mobile Optimized */}
             <div>
-              <div className="bg-gradient-to-r from-green-700 to-green-600 rounded-lg p-4 mb-4">
-                <h3 className="font-bebas text-2xl text-white">🔥 Warmup</h3>
+              <div className="bg-gradient-to-r from-green-700 to-green-600 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                <h3 className="font-bebas text-xl sm:text-2xl text-white">🔥 Warmup</h3>
               </div>
               <a
                 href={currentWorkout.warmup.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block bg-gradient-to-br from-green-900/40 to-gray-900 border-2 border-green-500 rounded-xl p-5 hover:border-green-400 transition-all"
+                className="block bg-gradient-to-br from-green-900/40 to-gray-900 border-2 border-green-500 rounded-xl p-4 sm:p-5 hover:border-green-400 active:border-green-300 transition-all touch-manipulation"
               >
-                <div className="font-bebas text-2xl text-green-400 flex items-center gap-3">
-                  <span>🎥</span>
-                  <span>{currentWorkout.warmup.name}</span>
-                  <span className="text-sm text-gray-400">→ Click to watch</span>
+                <div className="font-bebas text-lg sm:text-xl md:text-2xl text-green-400 flex flex-wrap items-center gap-2 sm:gap-3">
+                  <span className="text-2xl">🎥</span>
+                  <span className="break-words">{currentWorkout.warmup.name}</span>
+                  <span className="text-xs sm:text-sm text-gray-400 ml-auto">→ Click to watch</span>
                 </div>
               </a>
             </div>
 
-            {/* Activation */}
+            {/* Activation - Mobile Optimized */}
             {currentWorkout.activation && (
               <div>
-                <div className="bg-gradient-to-r from-orange-700 to-orange-600 rounded-lg p-4 mb-4">
-                  <h3 className="font-bebas text-2xl text-white">⚡ Activation & Potentiation</h3>
+                <div className="bg-gradient-to-r from-orange-700 to-orange-600 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                  <h3 className="font-bebas text-xl sm:text-2xl text-white">⚡ Activation & Potentiation</h3>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {currentWorkout.activation.map((ex, i) => renderExerciseCard(ex, i, 'activation'))}
                 </div>
               </div>
             )}
 
-            {/* Main Work */}
+            {/* Main Work - Mobile Optimized */}
             <div>
-              <div className="bg-gradient-to-r from-yellow-700 to-yellow-600 rounded-lg p-4 mb-4">
-                <h3 className="font-bebas text-2xl text-black">💪 Main Work - Focus Movements</h3>
+              <div className="bg-gradient-to-r from-yellow-700 to-yellow-600 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                <h3 className="font-bebas text-xl sm:text-2xl text-black">💪 Main Work - Focus Movements</h3>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {currentWorkout.main.map((ex, i) => renderExerciseCard(ex, i, 'main'))}
               </div>
             </div>
 
-            {/* Strength */}
+            {/* Strength - Mobile Optimized */}
             <div>
-              <div className="bg-gradient-to-r from-red-700 to-red-600 rounded-lg p-4 mb-4">
-                <h3 className="font-bebas text-2xl text-white">🏋️ Strength Block</h3>
+              <div className="bg-gradient-to-r from-red-700 to-red-600 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                <h3 className="font-bebas text-xl sm:text-2xl text-white">🏋️ Strength Block</h3>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {currentWorkout.strength.map((ex, i) => renderExerciseCard(ex, i, 'strength'))}
               </div>
             </div>
 
-            {/* Accessory */}
+            {/* Accessory - Mobile Optimized */}
             <div>
-              <div className="bg-gradient-to-r from-blue-700 to-blue-600 rounded-lg p-4 mb-4">
-                <h3 className="font-bebas text-2xl text-white">🎯 Accessory & Bulletproofing</h3>
+              <div className="bg-gradient-to-r from-blue-700 to-blue-600 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                <h3 className="font-bebas text-xl sm:text-2xl text-white">🎯 Accessory & Bulletproofing</h3>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {currentWorkout.accessory.map((ex, i) => renderExerciseCard(ex, i, 'accessory'))}
               </div>
             </div>
@@ -640,14 +689,14 @@ export default function SakariEliteProgram() {
         )}
 
         {activeTab === 'mobility' && (
-          <div className="space-y-6">
-            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-xl p-6 shadow-2xl">
-              <h2 className="font-bebas text-4xl text-white mb-2">🧘 Mobility & Bulletproofing</h2>
-              <p className="text-white text-lg">Joint health = Career longevity. Do this work.</p>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-xl p-4 sm:p-6 shadow-2xl">
+              <h2 className="font-bebas text-2xl sm:text-3xl md:text-4xl text-white mb-2">🧘 Mobility & Bulletproofing</h2>
+              <p className="text-white text-sm sm:text-base md:text-lg">Joint health = Career longevity. Do this work.</p>
             </div>
 
-            {/* Daily Mobility */}
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-green-500 rounded-xl p-6">
+            {/* Daily Mobility - Mobile Optimized */}
+            <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-green-500 rounded-xl p-4 sm:p-6">
               <h3 className="font-bebas text-3xl text-green-400 mb-4">{MOBILITY_PROTOCOLS.daily.title}</h3>
               <p className="text-gray-300 mb-6">{MOBILITY_PROTOCOLS.daily.description}</p>
               {MOBILITY_PROTOCOLS.daily.blocks.map((block, i) => (
@@ -706,10 +755,10 @@ export default function SakariEliteProgram() {
         )}
 
         {activeTab === 'nutrition' && (
-          <div className="space-y-6">
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 shadow-2xl">
-              <h2 className="font-bebas text-4xl text-white mb-2">🍗 Offseason Nutrition Protocol</h2>
-              <p className="text-white text-lg">Fuel for growth. This is when you build your foundation.</p>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-4 sm:p-6 shadow-2xl">
+              <h2 className="font-bebas text-2xl sm:text-3xl md:text-4xl text-white mb-2">🍗 Offseason Nutrition Protocol</h2>
+              <p className="text-white text-sm sm:text-base md:text-lg">Fuel for growth. This is when you build your foundation.</p>
             </div>
 
             {/* Philosophy */}
@@ -811,10 +860,10 @@ export default function SakariEliteProgram() {
         )}
 
         {activeTab === 'recovery' && (
-          <div className="space-y-6">
-            <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-6 shadow-2xl">
-              <h2 className="font-bebas text-4xl text-white mb-2">😴 Recovery & Regeneration</h2>
-              <p className="text-white text-lg">You don't grow in the gym. You grow when you recover.</p>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-4 sm:p-6 shadow-2xl">
+              <h2 className="font-bebas text-2xl sm:text-3xl md:text-4xl text-white mb-2">😴 Recovery & Regeneration</h2>
+              <p className="text-white text-sm sm:text-base md:text-lg">You don't grow in the gym. You grow when you recover.</p>
             </div>
 
             {/* Sleep */}
@@ -918,10 +967,10 @@ export default function SakariEliteProgram() {
         )}
 
         {activeTab === 'progression' && (
-          <div className="space-y-6">
-            <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-xl p-6 shadow-2xl">
-              <h2 className="font-bebas text-4xl text-white mb-2">📈 Progressive Overload Strategy</h2>
-              <p className="text-white text-lg">How to get stronger across 6 weeks</p>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-xl p-4 sm:p-6 shadow-2xl">
+              <h2 className="font-bebas text-2xl sm:text-3xl md:text-4xl text-white mb-2">📈 Progressive Overload Strategy</h2>
+              <p className="text-white text-sm sm:text-base md:text-lg">How to get stronger across 6 weeks</p>
             </div>
 
             {/* Principles */}
