@@ -14,14 +14,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Tailwind CSS CDN (for production, consider building your own bundle) -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- React and ReactDOM from CDN -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-  <!-- Babel Standalone for JSX transformation (development only - use a build step for production) -->
+  <!-- Babel Standalone for JSX transformation -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
@@ -72,13 +72,40 @@
     <div class="loading">Loading VLV Elite Program...</div>
   </div>
 
-  <!-- Load the React component -->
-  <script type="text/babel" src="sakari-elite-program.jsx"></script>
-
-  <!-- Mount the React app -->
+  <!-- Inline React component to avoid module export issues -->
   <script type="text/babel">
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<SakariEliteProgram />);
+    const { useState } = React;
+
+    // Import the component code by fetching and evaluating it
+    fetch('sakari-elite-program.jsx')
+      .then(response => response.text())
+      .then(code => {
+        // Remove the import statement and export statement
+        code = code.replace(/import.*from.*['"];?/g, '');
+        code = code.replace(/export default function/, 'function');
+
+        // Create a function that returns the component
+        const componentCode = code + '\n\nreturn SakariEliteProgram;';
+        const SakariEliteProgram = new Function('React', 'useState', componentCode)(React, useState);
+
+        // Render the component
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(SakariEliteProgram));
+      })
+      .catch(error => {
+        console.error('Error loading component:', error);
+        document.getElementById('root').innerHTML = `
+          <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #000; color: #F5C842; font-size: 1.5rem; padding: 20px; text-align: center;">
+            <div>
+              <div style="margin-bottom: 20px;">⚠️ Error Loading App</div>
+              <div style="font-size: 1rem; color: #ccc;">${error.message}</div>
+              <div style="font-size: 0.9rem; color: #888; margin-top: 10px;">
+                Please make sure you're running this from a web server, not directly from the file system.
+              </div>
+            </div>
+          </div>
+        `;
+      });
   </script>
 </body>
 </html>
