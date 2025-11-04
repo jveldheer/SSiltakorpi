@@ -37,9 +37,9 @@
 <body>
   <div id="root"></div>
 
+  <script type="text/babel">
     const { useState } = React;
 
-  <script type="text/babel">
 
 // Complete Week 1 Data Structure
 const WEEK_1_DATA = {
@@ -1071,7 +1071,7 @@ function SakariEliteProgram() {
 
     // Render the app
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<SakariEliteProgram />);
+    root.render(React.createElement(SakariEliteProgram));
   </script>
 </body>
 </html>
